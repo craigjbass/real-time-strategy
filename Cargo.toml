@@ -1,0 +1,9 @@
+[package]
+name = "real_time_strategy"
+version = "0.1.0"
+authors = ["Craig J. Bass <craig@madetech.com>"]
+
+[dependencies.game_use_cases]
+path = "game/use_cases"
+
+[dependencies]

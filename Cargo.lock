@@ -1,0 +1,11 @@
+[[package]]
+name = "game_use_cases"
+version = "0.1.0"
+
+[[package]]
+name = "real_time_strategy"
+version = "0.1.0"
+dependencies = [
+ "game_use_cases 0.1.0",
+]
+
