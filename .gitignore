@@ -1,6 +1,7 @@
 
-/target/
+target
 **/*.rs.bk
 .idea
 game/**/Cargo.lock
 *.iml
+**/Cargo.lock
