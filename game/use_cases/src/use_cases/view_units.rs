@@ -1,16 +1,4 @@
-pub struct SpawnUnit {}
-
-impl SpawnUnit {
-    pub fn new() -> Self {
-        return SpawnUnit {};
-    }
-
-    pub fn execute(self) {}
-}
-
-
-use std::sync::mpsc::*;
-use std::thread;
+use gateway::UnitGateway;
 
 #[derive(PartialEq, Eq, Debug)]
 pub struct PresentableUnit {
@@ -19,12 +7,6 @@ pub struct PresentableUnit {
 
 pub trait ViewUnitsPresenter {
     fn present(&self, presentable_unit: PresentableUnit);
-}
-
-pub struct Unit {}
-
-pub trait UnitGateway {
-    fn get_units_stream(&self) -> Receiver<Unit>;
 }
 
 pub struct ViewUnits {
@@ -48,6 +30,8 @@ impl ViewUnits {
 mod tests {
     use super::*;
     use std::cell::Cell;
+    use std::sync::mpsc::*;
+    use domain::Unit;
 
     struct SpyPresenter {
         last_presentable_unit: Cell<Option<PresentableUnit>>
