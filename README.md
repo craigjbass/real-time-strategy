@@ -3,6 +3,7 @@
 ## Prerequisites
 
 * rust (e.g. via rustup https://www.rust-lang.org/en-US/install.html)
+* sdl2 dev (see requirements here: https://github.com/Rust-SDL2/rust-sdl2#requirements)
 * `cargo install cargo-watch`
 
 ## Running tests
