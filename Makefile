@@ -1,4 +1,4 @@
-test:
+test-once:
 	@echo "==== [ unit tests ] ==============================================="
 	@echo "==================================================================="
 	@echo "                                                                   "
@@ -8,3 +8,7 @@ test:
 	@echo "                                                                   "
 	@cargo test
 
+test:
+	cargo watch -s "make test-once"
+
+ci: test-once

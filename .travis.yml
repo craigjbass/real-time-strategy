@@ -1,0 +1,5 @@
+language: rust
+rust:
+  - 1.24.0
+script:
+  - make ci
