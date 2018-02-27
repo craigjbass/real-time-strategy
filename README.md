@@ -13,4 +13,6 @@ $ make test
 
 ## Running the game
 
-TBC
+```zsh
+$ make run
+```

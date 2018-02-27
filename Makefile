@@ -12,3 +12,6 @@ test:
 	cargo watch -s "make test-once"
 
 ci: test-once
+
+run:
+	cargo run

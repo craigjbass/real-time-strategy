@@ -7,3 +7,4 @@ authors = ["Craig J. Bass <craig@madetech.com>"]
 path = "game/use_cases"
 
 [dependencies]
+sdl2 = "0.31"
