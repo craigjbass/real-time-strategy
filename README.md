@@ -1,4 +1,4 @@
-# Real Time Strategy
+# Real Time Strategy [![Build Status](https://travis-ci.org/craigjbass/real-time-strategy.svg?branch=master)](https://travis-ci.org/craigjbass/real-time-strategy)
 
 ## Prerequisites
 
