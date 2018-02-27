@@ -58,22 +58,21 @@ mod tests {
     struct EmptyUnitsGatewayStub {}
 
     impl UnitGateway for EmptyUnitsGatewayStub {
-        fn get_units_stream(&self) -> Receiver<Unit> {
+        fn get_units_stream(&self) -> Arc<Receiver<Unit>> {
             let (_, receiver) = channel();
-            return receiver;
+            return Arc::new(receiver);
         }
     }
 
     struct OneUnitGatewayStub {}
 
     impl UnitGateway for OneUnitGatewayStub {
-        fn get_units_stream(&self) -> Receiver<Unit> {
+        fn get_units_stream(&self) -> Arc<Receiver<Unit>> {
             let (sender, receiver) = channel();
             sender.send(Unit {});
-            return receiver;
+            return Arc::new(receiver);
         }
     }
-
 
     #[test]
     fn can_present_no_units() {

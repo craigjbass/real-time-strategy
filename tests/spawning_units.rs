@@ -20,16 +20,24 @@ impl view_units::ViewUnitsPresenter for MockPresenter {
 }
 
 #[test]
-#[ignore]
 fn spawning_units() {
-    struct Placeholder {}
+    struct Placeholder {
+        sender: Arc<Sender<Unit>>,
+        receiver: Arc<Receiver<Unit>>
+    }
+    impl Placeholder {
+        fn new() -> Self {
+            let (sender, receiver) = channel();
+            return Placeholder { sender: Arc::new(sender), receiver: Arc::new(receiver) };
+        }
+    }
     impl UnitGateway for Placeholder {
-        fn get_units_stream(&self) -> Receiver<Unit> {
-            unimplemented!()
+        fn get_units_stream(&self) -> Arc<Receiver<Unit>> {
+            return Arc::clone(&self.receiver);
         }
     }
 
-    let unit_gateway: Arc<Mutex<UnitGateway>> = Arc::new(Mutex::new(Placeholder {}));
+    let unit_gateway: Arc<Mutex<UnitGateway>> = Arc::new(Mutex::new(Placeholder::new()));
 
     let spawn_unit = SpawnUnit::new(Arc::clone(&unit_gateway));
     let view_units = ViewUnits::new(Arc::clone(&unit_gateway));
