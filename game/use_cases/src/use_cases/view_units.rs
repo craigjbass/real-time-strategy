@@ -1,4 +1,5 @@
 use gateway::UnitGateway;
+use std::sync::{Arc, Mutex};
 
 #[derive(PartialEq, Eq, Debug)]
 pub struct PresentableUnit {
@@ -10,16 +11,16 @@ pub trait ViewUnitsPresenter {
 }
 
 pub struct ViewUnits {
-    unit_gateway: Box<UnitGateway>
+    unit_gateway: Arc<Mutex<UnitGateway>>
 }
 
 impl ViewUnits {
-    pub fn new(unit_gateway: Box<UnitGateway>) -> Self {
+    pub fn new(unit_gateway: Arc<Mutex<UnitGateway>>) -> Self {
         return ViewUnits { unit_gateway };
     }
 
     pub fn execute(self, presenter: &mut ViewUnitsPresenter) {
-        let result = self.unit_gateway.get_units_stream().recv();
+        let result = self.unit_gateway.lock().unwrap().get_units_stream().recv();
         if !result.is_err() {
             presenter.present(PresentableUnit { health: u8::max_value() })
         }
@@ -78,7 +79,7 @@ mod tests {
     fn can_present_no_units() {
         let gateway = EmptyUnitsGatewayStub {};
 
-        let use_case = ViewUnits::new(Box::new(gateway));
+        let use_case = ViewUnits::new(Arc::new(Mutex::new(gateway)));
         let mut presenter = SpyPresenter::new();
         use_case.execute(&mut presenter);
 
@@ -91,7 +92,7 @@ mod tests {
     #[test]
     fn can_present_a_unit() {
         let gateway = OneUnitGatewayStub {};
-        let use_case = ViewUnits::new(Box::new(gateway));
+        let use_case = ViewUnits::new(Arc::new(Mutex::new(gateway)));
         let mut presenter = SpyPresenter::new();
         use_case.execute(&mut presenter);
 
